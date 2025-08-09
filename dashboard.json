@@ -1,0 +1,69 @@
+{
+  "id": null,
+  "uid": "anom-lab",
+  "title": "Offshore Anomalias (MQTT\u2192InfluxDB)",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "f1 Observado vs Previsto",
+      "targets": [
+        {
+          "query": "from(bucket:\"signals\") |> range(start: -1h) |> filter(fn: (r) => r._measurement == \"anomalias\" and r._field == \"f1_obs\")"
+        },
+        {
+          "query": "from(bucket:\"signals\") |> range(start: -1h) |> filter(fn: (r) => r._measurement == \"anomalias\" and r._field == \"f1_pred\")"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Score vs Threshold",
+      "targets": [
+        {
+          "query": "from(bucket:\"signals\") |> range(start: -1h) |> filter(fn: (r) => r._measurement == \"anomalias\" and r._field == \"score\")"
+        },
+        {
+          "query": "from(bucket:\"signals\") |> range(start: -1h) |> filter(fn: (r) => r._measurement == \"anomalias\" and r._field == \"threshold\")"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      }
+    },
+    {
+      "type": "state-timeline",
+      "title": "Alertas (0/1)",
+      "options": {
+        "legend": {
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "query": "from(bucket:\"signals\") |> range(start: -1h) |> filter(fn: (r) => r._measurement == \"anomalias\" and r._field == \"alert\")"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      }
+    }
+  ],
+  "templating": {
+    "list": []
+  }
+}
